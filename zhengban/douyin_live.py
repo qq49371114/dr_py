@@ -13,7 +13,7 @@ class douYinLive:
         return re.findall('flv_pull_url":(.*?})', html)[0]
 
     def start(self):
-        res = requests.get(self.url, headers=self.headers)
+        res = requests.get(self.url, headers=self.headers, timeout=60)
         print(self.parse(res.text))
 
 

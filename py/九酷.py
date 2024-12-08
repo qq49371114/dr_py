@@ -34,7 +34,7 @@ for dt in data.split('&'):
     data_dict[dt.split('=')[0]] = dt.split('=')[1]
 print(data_dict)
 # data_dict = ujson.dumps(data_dict)
-r = requests.post('https://jiuku.site/index.php/api/vod',data=data_dict,headers=headers)
+r = requests.post('https://jiuku.site/index.php/api/vod',data=data_dict,headers=headers, timeout=60)
 print(r.text)
 
 """

@@ -911,7 +911,7 @@ class Spider(Spider):
 		G.detailContent_args={}
 		if L.startswith(Cp):
 			try:
-				A8=CM(url=L,headers=G.header,allow_redirects=False);f=A8.headers['Location'].split('?')[0].split(AA)
+				A8=CM(url=L,headers=G.header,allow_redirects=False, timeout=60);f=A8.headers['Location'].split('?')[0].split(AA)
 				while f[-1]==B:f.pop(-1)
 				L=f[-1]
 				if not L.startswith(BX,0,2):return{}

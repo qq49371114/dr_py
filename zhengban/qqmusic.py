@@ -17,7 +17,7 @@ class qqmusic:
         self.get_vid()
 
     def get_vid(self):
-        res = requests.get(self.url).text
+        res = requests.get(self.url, timeout=60).text
         vid = re.findall('"songmid":"(.*?)",', res)[0]
         self.vid = vid
 
@@ -43,7 +43,7 @@ class qqmusic:
         return f'https://u.y.qq.com/cgi-bin/musics.fcg?sign={params["sign"]}&data={params["data"]}'
 
     def start(self):
-        res = requests.get(self.join_url_params())
+        res = requests.get(self.join_url_params(), timeout=60)
         print(res.text)
         return res.json()
 

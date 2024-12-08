@@ -10,7 +10,7 @@ class Bili:
         }
 
     def start(self):
-        res = requests.get(self.url)
+        res = requests.get(self.url, timeout=60)
         result = re.findall("window.__playinfo__=(.*?)</script>", res.text)
         print(result[0])
         return result[0]

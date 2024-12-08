@@ -14,7 +14,7 @@ def main():
         'referer':'https://files.yuchenglw.com',
         # 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36 Edg/108.0.1462.42'
     }
-    r = requests.get('https://oa.qianyibangong.com/p/221121/33cb60d609',headers=headers,verify=False)
+    r = requests.get('https://oa.qianyibangong.com/p/221121/33cb60d609',headers=headers,verify=False, timeout=60)
     image_base64 = r.text
     # print(r.text)
     # print(type(image_base64))

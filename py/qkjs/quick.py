@@ -78,7 +78,7 @@ print(ctx.get('print2'))
 print(11,ctx.parse_json('{"a":1}'))
 
 def request(url):
-    r = requests.get(url)
+    r = requests.get(url, timeout=60)
     r.encoding = r.apparent_encoding
     html = r.text
     print(html)

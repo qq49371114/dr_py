@@ -206,7 +206,7 @@ class KuWo:
 
     def start(self):
         params = kwDES().encrypt(str("type=convert_url2&br=2000kflac&format=mp3|aac&sig=0&rid=" + self.rid).encode())
-        res = requests.get(self.url + params).text
+        res = requests.get(self.url + params, timeout=60).text
         print(res)
 
 

@@ -27,7 +27,7 @@ class YouKu:
         headers = {
             "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 11_2_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36"
         }
-        res = requests.get(self.video_url, headers=headers).text
+        res = requests.get(self.video_url, headers=headers, timeout=60).text
         current_showid = re.findall("id_(.*?).html", res)[0]
         # video_id = re.findall("videoId: '(\d+)'", res)[0]
         self.params = {"show_id": current_showid}
@@ -121,7 +121,7 @@ class YouKu:
             "cookie": self.cookie,
             "Referer": "https://v.youku.com/"
         }
-        res = requests.get(self.url, params=self.join_params(), headers=headers)
+        res = requests.get(self.url, params=self.join_params(), headers=headers, timeout=60)
         print(res.text)
 
 

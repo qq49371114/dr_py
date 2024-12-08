@@ -75,7 +75,7 @@ class PPTV:
         return result
 
     def get_cid(self):
-        res = requests.get(self.video_url, headers=self.headers).text
+        res = requests.get(self.video_url, headers=self.headers, timeout=60).text
         cid = re.findall('var webcfg = {"id":(.*?),', res)
         return cid[0]
 
@@ -92,7 +92,7 @@ class PPTV:
 
         }
 
-        res = requests.get(self.url, params=params, headers=self.headers)
+        res = requests.get(self.url, params=params, headers=self.headers, timeout=60)
         print(res.text)
 
 

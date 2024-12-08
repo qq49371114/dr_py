@@ -18,7 +18,7 @@ class KuGou:
             "album_id": self.album_id,
             "mid": "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456"
         }
-        res = requests.get("https://wwwapi.kugou.com/yy/index.php?", params=params, headers=self.headers)
+        res = requests.get("https://wwwapi.kugou.com/yy/index.php?", params=params, headers=self.headers, timeout=60)
         print(res.json())
         return res.json()
 

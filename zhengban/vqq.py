@@ -36,7 +36,7 @@ def get_vid(vipUrl):
         if _type.find('/') > -1:
             vid = _type.split("/")[1]
         else:
-            r = requests.get(vipUrl, headers=headers)
+            r = requests.get(vipUrl, headers=headers, timeout=60)
             html = r.text
             vid = html.split('<link rel="canonical" href="https://v.qq.com/x/cover/')[1].split('/')[1].split('.')[0]
     else:

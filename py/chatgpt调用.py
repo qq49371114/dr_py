@@ -36,7 +36,7 @@ def ask_chatpgt(word):
     t1 = time.time()
     ret = ''
     try:
-        r = requests.post('https://api.openai.com/v1/completions',data=json.dumps(pdata),headers=headers)
+        r = requests.post('https://api.openai.com/v1/completions',data=json.dumps(pdata),headers=headers, timeout=60)
         ret = r.json()
         answer = ret['choices'][0]['text']
     except Exception as e:

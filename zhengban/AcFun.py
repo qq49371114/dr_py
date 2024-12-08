@@ -11,7 +11,7 @@ class AcFun:
         }
 
     def start(self):
-        res = requests.get(self.url, headers=self.headers)
+        res = requests.get(self.url, headers=self.headers, timeout=60)
         json_info = json.loads(re.findall("window.pageInfo =(.*?);", res.text)[0].split("=", 1)[-1].strip())
         print(json_info)
         return json_info

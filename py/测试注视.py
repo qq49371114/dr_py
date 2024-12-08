@@ -21,5 +21,5 @@ headers = {
 form = 'mform=1&mcountry=all&tag_arr%5B%5D=3&page=1&sort=updatetime&album=all&title='
 form = 'mform=1&mcountry=all&tag_arr%5B%5D=all&page=1&sort=default&album=all&title='
 print(form)
-r = requests.post('https://gaze.run/filter_movielist',data=form,headers=headers)
+r = requests.post('https://gaze.run/filter_movielist',data=form,headers=headers, timeout=60)
 print(r.text)

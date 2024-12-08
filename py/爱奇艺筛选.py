@@ -82,7 +82,7 @@ data = [{
 ]
 ft_dict = {}
 def getOne(url,cate):
-    r = requests.get(url, headers=headers)
+    r = requests.get(url, headers=headers, timeout=60)
     html = r.json()
     filters = html['data']
     new_list = list(tuple(data))

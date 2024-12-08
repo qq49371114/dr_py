@@ -12,7 +12,7 @@ class huya:
         return b64decode(stream).decode()
 
     def start(self):
-        res = requests.get(self.url).text
+        res = requests.get(self.url, timeout=60).text
         hyplay = re.findall('hyPlayerConfig\s=\s(.*?});', res, re.S)
         stream = json.loads(self.decodeStream(eval(hyplay[0])['stream']).replace("amp;", ""))
         print(stream)

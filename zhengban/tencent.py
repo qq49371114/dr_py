@@ -34,7 +34,7 @@ class tencent:
             if _type.find('/') > -1:
                 vid = _type.split("/")[1]
             else:
-                r = requests.get(vipUrl, headers=self.headers)
+                r = requests.get(vipUrl, headers=self.headers, timeout=60)
                 html = r.text
                 vid = html.split('<link rel="canonical" href="https://v.qq.com/x/cover/')[1].split('/')[1].split('.')[0]
         else:
@@ -163,7 +163,7 @@ class tencent:
                   "adparam": ad_params,
                   "vinfoparam": vinfoparams}
         # print(params)
-        res = requests.post("https://vd.l.qq.com/proxyhttp", headers=self.headers, json=params)
+        res = requests.post("https://vd.l.qq.com/proxyhttp", headers=self.headers, json=params, timeout=60)
         data = res.json()
         return self.deal_data(data)
 

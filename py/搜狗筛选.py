@@ -13,7 +13,7 @@ headers = {'user-agent':'Mozilla/5.0 (Linux; Android 11; M2007J3SC Build/RKQ1.20
 
 ft_dict = {}
 def getOne(url):
-    r = requests.get(url, headers=headers)
+    r = requests.get(url, headers=headers, timeout=60)
     html = r.json()
     filters = html['listData']['list']['filter_list']
     cate_id = html['listData']['list']['entity']
