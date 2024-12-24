@@ -1,9 +1,9 @@
 from binascii import hexlify
-import random
 from Crypto.Cipher import AES
 from base64 import b64encode
 from Crypto.Util.Padding import pad
 import requests
+import secrets
 
 
 class music163:
@@ -14,7 +14,7 @@ class music163:
         }
         self.vid = self.url.split("id=")[-1]
         self.second_key = "".join(
-            random.choices(list('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'), k=16))
+            secrets.SystemRandom().choices(list('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'), k=16))
 
     def get_data(self, vid):
         return f'{{"ids":"[{vid}]","level":"standard","encodeType":"aac","csrf_token":""}}'

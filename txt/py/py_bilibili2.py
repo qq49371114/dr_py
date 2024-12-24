@@ -1,3 +1,5 @@
+import secrets
+
 D7='Referer'
 D6='liveapi2'
 D5='playUrl'
@@ -243,7 +245,7 @@ from base.spider import Spider
 from requests import session as Bg,utils as Bh,get as CM
 from requests.adapters import HTTPAdapter as D8,Retry
 from concurrent.futures import ThreadPoolExecutor as D9,as_completed as Bi
-import threading as j,hashlib,time as x,random
+import threading as j,hashlib,time as x
 from functools import reduce
 from urllib.parse import quote,urlencode as CN
 sys.path.append('..')
@@ -741,7 +743,7 @@ class Spider(Spider):
 			if M==L and not H.userid or M=='登录':return H.get_Login_qrcode(J)
 			return H.get_dynamic(pg=J,mid=M,order=I)
 		elif E==Ae:
-			I='hot';P=random.choice(H.userConfig[Aw]);P=P[C]
+			I='hot';P=secrets.choice(H.userConfig[Aw]);P=P[C]
 			if b in D:I=D[b]
 			if n in D:P=D[n]
 			return H.get_channel(pg=J,cid=P,order=I)

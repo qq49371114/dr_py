@@ -3,11 +3,11 @@ import time
 from Crypto.Cipher import PKCS1_v1_5 as Cipher_pkcs1_v1_5
 from Crypto.PublicKey import RSA
 import math
-import random
 import execjs
 import uuid
 import requests
 import re
+import secrets
 
 
 class PPTV:
@@ -33,7 +33,7 @@ class PPTV:
     def getRamNumber(self, e):
         t = ""
         for i in range(e):
-            t += str(hex(math.floor(16 * random.random()))[2:])
+            t += str(hex(math.floor(16 * secrets.SystemRandom().random()))[2:])
         return t.upper()
 
     def encrypt(self, message):

@@ -24,10 +24,10 @@ from utils.ua import time, get_interval
 from utils.log import logger
 from utils.update import getLocalVer, getHotSuggest
 from js.rules import getJxs
-import random
 from utils.web import getParmas, verfy_token
 from utils.common_api import js_render
 import functools
+import secrets
 
 home = Blueprint("home", __name__, static_folder='/static')
 
@@ -97,7 +97,7 @@ def random_pics():
         if id and f'{img_path}/{id}.jpg' in pics:
             pic = f'{img_path}/{id}.jpg'
         else:
-            pic = random.choice(pics)
+            pic = secrets.choice(pics)
         file = open(pic, "rb").read()
         response = make_response(file)
         response.headers['Content-Type'] = 'image/jpeg'
