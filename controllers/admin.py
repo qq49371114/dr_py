@@ -527,7 +527,7 @@ def login_api():
     if check:
         # response = make_response(redirect('/admin'))
         response = make_response(R.success('登录成功'))
-        response.set_cookie('token', token)
+        response.set_cookie('token', token, secure=True, httponly=True, samesite='Lax')
         return response
     else:
         return R.failed('登录失败,用户名或密码错误')
