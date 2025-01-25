@@ -20,3 +20,4 @@ jsonpath
 quickjs
 ujson
 Werkzeug==2.2.2
+defusedxml==0.7.1
