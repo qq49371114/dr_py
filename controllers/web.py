@@ -139,7 +139,7 @@ def get302UrlResponse():
             'user-agent': 'Mozilla/5.0'
         }
         logger.info(f'开始调用接口:{url}')
-        r = requests.get(url, headers=headers, timeout=timeout, verify=False)
+        r = requests.get(url, headers=headers, timeout=timeout, verify=True)
         rurl = r.url
         res_data = r.text
         try:

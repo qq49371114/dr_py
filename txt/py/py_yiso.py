@@ -36,7 +36,7 @@ class Spider(Spider):
 
 	def searchContent(self,key,quick):
 		url = "https://yiso.fun/api/search?name={0}&from=ali".format(key)
-		vodList = requests.get(url=url, headers=self.header, verify=False).json()["data"]["list"]
+		vodList = requests.get(url=url, headers=self.header, verify=True).json()["data"]["list"]
 		videos = []
 		for vod in vodList:
 			videos.append({

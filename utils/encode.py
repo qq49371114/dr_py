@@ -101,7 +101,7 @@ def requireCache(lib:str):
                 r = requests.get(lib,headers={
                     'Referer': lib,
                     'User-Agent': UC_UA,
-                },timeout=5,verify=False)
+                },timeout=5,verify=True)
                 with open(lib_path,mode='wb+') as f:
                     f.write(r.content)
                 code =  r.text
@@ -127,7 +127,7 @@ class OcrApi:
     def classification(self,img):
         try:
             # code = requests.post(self.api,data=img,headers={'user-agent':PC_UA},verify=False).text
-            code = requests.post(self.api,data=base64.b64encode(img).decode(),headers={'user-agent':PC_UA},verify=False).text
+            code = requests.post(self.api,data=base64.b64encode(img).decode(),headers={'user-agent':PC_UA},verify=True).text
         except Exception as e:
             print(f'ocr识别发生错误:{e}')
             code = ''
@@ -318,13 +318,13 @@ def base_request(url,obj):
     try:
         # r = requests.get(url, headers=headers, params=body, timeout=timeout)
         if method.lower() == 'get':
-            r = requests.get(url, headers=obj['headers'], params=obj['body'], timeout=obj['timeout'],verify=False)
+            r = requests.get(url, headers=obj['headers'], params=obj['body'], timeout=obj['timeout'],verify=True)
         else:
             # if isinstance(obj['body'],dict):
             #     obj['body'] = coverDict2form(obj['body'])
             # print(obj['body'])
             # 亲测不需要转换data 格式的dict 为 form都正常 (gaze规则和奇优搜索)
-            r = requests.post(url, headers=obj['headers'], data=obj['body'], timeout=obj['timeout'],verify=False)
+            r = requests.post(url, headers=obj['headers'], data=obj['body'], timeout=obj['timeout'],verify=True)
         # r = requests.get(url, timeout=timeout)
         # r = requests.get(url)
         # print(encoding)
