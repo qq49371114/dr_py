@@ -16,7 +16,7 @@ def to_lower_camel_case(x):
 
 def render_template_string(source: str, **context):
     # 构造环境
-    env = Environment()
+    env = Environment(autoescape=True)
     # 添加一个过滤器
     env.filters['to_lower_camel_case'] = to_lower_camel_case
     # 获取模板
