@@ -3,8 +3,8 @@
 # File  : 搜狗筛选.py
 # Author: DaShenHan&道长-----先苦后甜，任凭晚风拂柳颜------
 # Date  : 2022/9/11
-import requests
 from pprint import pprint
+from security import safe_requests
 
 cates = 'teleplay&film&cartoon&tvshow&documentary'.split('&')
 urls = [f'https://waptv.sogou.com/napi/video/classlist?abtest=0&iploc=CN1304&spver=&listTab={cate}&filter=&start=0&len=15&fr=filter' for cate in cates]
@@ -13,7 +13,7 @@ headers = {'user-agent':'Mozilla/5.0 (Linux; Android 11; M2007J3SC Build/RKQ1.20
 
 ft_dict = {}
 def getOne(url):
-    r = requests.get(url, headers=headers)
+    r = safe_requests.get(url, headers=headers)
     html = r.json()
     filters = html['listData']['list']['filter_list']
     cate_id = html['listData']['list']['entity']

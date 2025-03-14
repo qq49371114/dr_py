@@ -1,8 +1,9 @@
 from quickjs import Function,Context
-import requests
 from time import time
 import js2py
 import json
+from security import safe_requests
+
 ctx = Context()
 ctx.add_callable("print", print)
 def print2(text):
@@ -78,7 +79,7 @@ print(ctx.get('print2'))
 print(11,ctx.parse_json('{"a":1}'))
 
 def request(url):
-    r = requests.get(url)
+    r = safe_requests.get(url)
     r.encoding = r.apparent_encoding
     html = r.text
     print(html)

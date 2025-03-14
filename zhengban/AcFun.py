@@ -1,6 +1,6 @@
-import requests
 import re
 import json
+from security import safe_requests
 
 
 class AcFun:
@@ -11,7 +11,7 @@ class AcFun:
         }
 
     def start(self):
-        res = requests.get(self.url, headers=self.headers)
+        res = safe_requests.get(self.url, headers=self.headers)
         json_info = json.loads(re.findall("window.pageInfo =(.*?);", res.text)[0].split("=", 1)[-1].strip())
         print(json_info)
         return json_info

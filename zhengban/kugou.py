@@ -1,4 +1,4 @@
-import requests
+from security import safe_requests
 
 
 class KuGou:
@@ -18,7 +18,7 @@ class KuGou:
             "album_id": self.album_id,
             "mid": "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456"
         }
-        res = requests.get("https://wwwapi.kugou.com/yy/index.php?", params=params, headers=self.headers)
+        res = safe_requests.get("https://wwwapi.kugou.com/yy/index.php?", params=params, headers=self.headers)
         print(res.json())
         return res.json()
 

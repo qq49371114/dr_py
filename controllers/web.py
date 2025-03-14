@@ -7,7 +7,6 @@ import functools
 import json
 import os
 from urllib.parse import urljoin, unquote,quote
-import requests
 from flask import Blueprint, abort, request, render_template, send_from_directory, render_template_string, jsonify, \
     make_response, redirect, \
     current_app, url_for
@@ -28,6 +27,7 @@ from controllers.service import storage_service, rules_service
 from concurrent.futures import ThreadPoolExecutor, as_completed, thread  # 引入线程池
 from quickjs import Function, Context
 import ujson
+from security import safe_requests
 
 # web = Blueprint("web", __name__, template_folder='templates/cmsV10/mxpro/html/index/')
 web = Blueprint("web", __name__)
@@ -139,7 +139,7 @@ def get302UrlResponse():
             'user-agent': 'Mozilla/5.0'
         }
         logger.info(f'开始调用接口:{url}')
-        r = requests.get(url, headers=headers, timeout=timeout, verify=False)
+        r = safe_requests.get(url, headers=headers, timeout=timeout, verify=False)
         rurl = r.url
         res_data = r.text
         try:

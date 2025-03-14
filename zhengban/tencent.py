@@ -4,6 +4,7 @@ import time
 import re
 import execjs
 from urllib.parse import quote
+from security import safe_requests
 
 class tencent:
     def __init__(self, url, timeout=None,cookie=''):
@@ -34,7 +35,7 @@ class tencent:
             if _type.find('/') > -1:
                 vid = _type.split("/")[1]
             else:
-                r = requests.get(vipUrl, headers=self.headers)
+                r = safe_requests.get(vipUrl, headers=self.headers)
                 html = r.text
                 vid = html.split('<link rel="canonical" href="https://v.qq.com/x/cover/')[1].split('/')[1].split('.')[0]
         else:

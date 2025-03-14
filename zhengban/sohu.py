@@ -1,6 +1,6 @@
-import requests
 
 import re
+from security import safe_requests
 
 
 class sohu:
@@ -11,7 +11,7 @@ class sohu:
         }
 
     def get_vid(self):
-        res = requests.get(self.url, headers=self.headers)
+        res = safe_requests.get(self.url, headers=self.headers)
         vid = re.findall('var vid="(\d+)";', res.text)
         if len(vid) > 0:
             return vid[0]
@@ -24,7 +24,7 @@ class sohu:
             "ssl": "1",
             "pflag": "pch5",
         }
-        res = requests.get("https://hot.vrs.sohu.com/vrs_flash.action", params=params, headers=self.headers)
+        res = safe_requests.get("https://hot.vrs.sohu.com/vrs_flash.action", params=params, headers=self.headers)
         return res.json()
 
 

@@ -1,6 +1,6 @@
-import requests
 import execjs
 import re
+from security import safe_requests
 
 
 class xigua:
@@ -15,7 +15,7 @@ class xigua:
         self.nonce = self.getNonce()
 
     def getNonce(self):
-        res = requests.get(self.url, headers=self.headers)
+        res = safe_requests.get(self.url, headers=self.headers)
         return res.cookies.get("__ac_nonce")
 
     def getSign(self):
@@ -25,7 +25,7 @@ class xigua:
 
     def start(self):
         self.headers.update({"cookie": self.getSign()})
-        html = requests.get(self.url, headers=self.headers)
+        html = safe_requests.get(self.url, headers=self.headers)
         res = re.findall("window._SSR_HYDRATED_DATA=(.*?)</script>", html.text)[0].replace("undefined", 'null')
         print(res)
         return res

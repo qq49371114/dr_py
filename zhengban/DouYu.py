@@ -2,6 +2,7 @@ import execjs
 import requests
 import re
 import time
+from security import safe_requests
 
 
 class DouYu:
@@ -11,7 +12,7 @@ class DouYu:
         self.did = "3966acse00dd10qer895bdca00031601"
 
     def get_ub98484234(self):
-        res = requests.get(f"https://www.douyu.com/{self.room_id}").text
+        res = safe_requests.get(f"https://www.douyu.com/{self.room_id}").text
         ub98484234 = re.findall("(function ub98484234.*?})var", res)[0]
         var = re.findall("var\sv\s=\s(.*?)[.]slice", ub98484234)[0]
         var1 = re.findall(f"(var {var}=.*?);", res)[0]

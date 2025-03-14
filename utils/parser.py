@@ -11,6 +11,8 @@ import requests
 from flask import make_response, jsonify,render_template_string
 from functools import partial  # 这玩意儿能锁定一个函数的参数
 import subprocess
+from security import safe_requests
+
 subprocess.Popen = partial(subprocess.Popen, encoding="utf-8")  # 固定写法
 # 解决execjs执行js时产生的乱码报错，需要在导入该模块之前，让Popen的encoding参数锁定为utf-8
 # import execjs
@@ -42,7 +44,7 @@ def runJs(jsPath, before='', after='', ctx=None):
         if not os.path.exists(cache_path):
             try:
                 print(f'开始缓存远程规则:{js_name},来源{jsPath}')
-                js_code = requests.get(url=jsPath,timeout=3).text
+                js_code = safe_requests.get(url=jsPath,timeout=3).text
                 # js_code = requests.get(jsPath).text
                 with open(cache_path,mode='w+',encoding='utf-8') as f:
                     f.write(js_code)
@@ -129,7 +131,7 @@ def runPy(pyPath):
         print('远程免嗅:',py_name)
         if not os.path.exists(cache_path):
             try:
-                py_code = requests.get(pyPath,timeout=2).text
+                py_code = safe_requests.get(pyPath,timeout=2).text
                 with open(cache_path,mode='w+',encoding='utf-8') as f:
                     f.write(py_code)
             except Exception as e:

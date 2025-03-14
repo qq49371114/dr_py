@@ -5,9 +5,8 @@
 # Date  : 2022/10/20
 
 import re
-
-import requests
 from utils.htmlParser import jsoup
+from security import safe_requests
 
 headers = {'user-agent':'Mozilla/5.0 (Linux; Android 11; M2007J3SC Build/RKQ1.200826.002; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/77.0.3865.120 MQQBrowser/6.2 TBS/045714 Mobile Safari/537.36'}
 
@@ -18,7 +17,7 @@ def getFilters(url):
     pdfh = jsp.pdfh
     pdfa = jsp.pdfa
     print(jsp)
-    r = requests.get(url,headers=headers)
+    r = safe_requests.get(url,headers=headers)
     r.encoding = r.apparent_encoding
     html = r.text
     cls_list = pdfa(html,'.mform&&div')

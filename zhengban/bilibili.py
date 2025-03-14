@@ -1,5 +1,5 @@
-import requests
 import re
+from security import safe_requests
 
 
 class Bili:
@@ -10,7 +10,7 @@ class Bili:
         }
 
     def start(self):
-        res = requests.get(self.url)
+        res = safe_requests.get(self.url)
         result = re.findall("window.__playinfo__=(.*?)</script>", res.text)
         print(result[0])
         return result[0]

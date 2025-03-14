@@ -6,8 +6,8 @@ import math
 import random
 import execjs
 import uuid
-import requests
 import re
+from security import safe_requests
 
 
 class PPTV:
@@ -75,7 +75,7 @@ class PPTV:
         return result
 
     def get_cid(self):
-        res = requests.get(self.video_url, headers=self.headers).text
+        res = safe_requests.get(self.video_url, headers=self.headers).text
         cid = re.findall('var webcfg = {"id":(.*?),', res)
         return cid[0]
 
@@ -92,7 +92,7 @@ class PPTV:
 
         }
 
-        res = requests.get(self.url, params=params, headers=self.headers)
+        res = safe_requests.get(self.url, params=params, headers=self.headers)
         print(res.text)
 
 

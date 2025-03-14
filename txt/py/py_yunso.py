@@ -1,9 +1,10 @@
 #coding=utf-8
 #!/usr/bin/python
 import sys
+from security import safe_requests
+
 sys.path.append('..') 
 from base.spider import Spider
-import requests
 import json
 import base64
 
@@ -41,7 +42,7 @@ class Spider(Spider):
 
 	def searchContent(self,key,quick):
 		url = "https://api.upyunso.com/search?keyword={0}&page=1&s_type=2".format(key)
-		rsp = requests.get(url=url, headers=self.header)
+		rsp = safe_requests.get(url=url, headers=self.header)
 		vodList = json.loads(base64.b64decode(rsp.text))['result']['items']
 		videos = []
 		for vod in vodList:

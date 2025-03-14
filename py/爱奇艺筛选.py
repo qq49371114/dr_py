@@ -4,9 +4,8 @@
 # Author: DaShenHan&道长-----先苦后甜，任凭晚风拂柳颜------
 # Date  : 2022/9/12
 import json
-
-import requests
 from pprint import pprint
+from security import safe_requests
 
 cates = '1&2&3&4&6&5&16'.split('&')
 urls = [f'https://pcw-api.iqiyi.com/search/category/categoryinfo?brand=IQIYI&channel_id={cate}&include_knowledge_content_type=&locale=zh' for cate in cates]
@@ -82,7 +81,7 @@ data = [{
 ]
 ft_dict = {}
 def getOne(url,cate):
-    r = requests.get(url, headers=headers)
+    r = safe_requests.get(url, headers=headers)
     html = r.json()
     filters = html['data']
     new_list = list(tuple(data))

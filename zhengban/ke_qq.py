@@ -1,5 +1,5 @@
-import requests
 import re
+from security import safe_requests
 
 
 class KeQq:
@@ -17,20 +17,20 @@ class KeQq:
         vid = re.findall("vid=(\d+)", self.url)
         if vid:
             return self.url.split("#")[0].split("/")[-1], vid[0]
-        html = requests.get(self.url, headers=self.headers)
+        html = safe_requests.get(self.url, headers=self.headers)
         params = re.findall(f"data-tid=(\d+)\sdata-taid={self.taid}\sdata-vid=(\d+)", html.text)
         return params[0]
 
     def getSign(self):
         term_id, fileId = self.getParams()
         self.vid = fileId
-        res = requests.get("https://ke.qq.com/cgi-bin/qcloud/get_token", params={"term_id": term_id, "fileId": fileId},
+        res = safe_requests.get("https://ke.qq.com/cgi-bin/qcloud/get_token", params={"term_id": term_id, "fileId": fileId},
                            headers=self.headers).json()
         return res["result"]
 
     def start(self):
         params = self.getSign()
-        res = requests.get(f"https://playvideo.qcloud.com/getplayinfo/v2/1258712167/{self.vid}",
+        res = safe_requests.get(f"https://playvideo.qcloud.com/getplayinfo/v2/1258712167/{self.vid}",
                            params=params, headers=self.headers)
         print(res.text)
         return res.json()

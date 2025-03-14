@@ -1,5 +1,5 @@
 from base64 import b64encode
-import requests
+from security import safe_requests
 
 
 class kwDES:
@@ -206,7 +206,7 @@ class KuWo:
 
     def start(self):
         params = kwDES().encrypt(str("type=convert_url2&br=2000kflac&format=mp3|aac&sig=0&rid=" + self.rid).encode())
-        res = requests.get(self.url + params).text
+        res = safe_requests.get(self.url + params).text
         print(res)
 
 
