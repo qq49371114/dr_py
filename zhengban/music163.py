@@ -37,7 +37,7 @@ class music163:
             "encSecKey": self.get_encSecKey(self.second_key)
         }
         res = requests.post("https://music.163.com/weapi/song/enhance/player/url/v1?csrf_token=", data=params,
-                            headers=self.headers)
+                            headers=self.headers, timeout=60)
         print(res.json())
         return res.json()
 

@@ -462,14 +462,14 @@ if __name__ == '__main__':
     # print(spider.homeContent(True))
     # print(spider.homeVideoContent())
     r = requests.head(
-        'http://192.168.31.49:5707/api/v1/vod/%E5%93%94%E6%BB%B4%E5%BD%B1%E8%A7%86?proxy=1&do=py&url=https://www.bde4.cc/10E79044B82A84F70BE1308FFA5232E4DC3D0CA9EC2BF6B1D4EF56B2CE5B67CF238965CCAE17F859665B7E166720986D.m3u8')
+        'http://192.168.31.49:5707/api/v1/vod/%E5%93%94%E6%BB%B4%E5%BD%B1%E8%A7%86?proxy=1&do=py&url=https://www.bde4.cc/10E79044B82A84F70BE1308FFA5232E4DC3D0CA9EC2BF6B1D4EF56B2CE5B67CF238965CCAE17F859665B7E166720986D.m3u8', timeout=60)
     print(r.headers, r.content)
     r = requests.get('https://www.bdys10.com/obj/63BEE3B148E464F16EE62435C53087B994902679D844EA9CC3615658CF55E01D',
                      headers={
                          'Cookie': 'm=1',
                          'app': '1',
                          'Referer': 'https://doc.weixin.qq.com/',
-                     })
+                     }, timeout=60)
     print(r.text)
     # print(spider.categoryContent('0', 1, False, None))
     # print(spider.detailContent([24420]))

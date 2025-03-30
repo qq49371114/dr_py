@@ -11,7 +11,7 @@ class kuaishou:
         }
 
     def start(self):
-        json_data = requests.get(self.url, headers=self.headers, allow_redirects=True).text
+        json_data = requests.get(self.url, headers=self.headers, allow_redirects=True, timeout=60).text
         res = re.findall('type="video/mp4" src="(.*?)"', json_data)[0]
         print(res)
         return res

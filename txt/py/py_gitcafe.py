@@ -80,7 +80,7 @@ class Spider(Spider):
 			"num":pg
 		}
 		
-		rsp = requests.post(url,headers=self.header,data=form)
+		rsp = requests.post(url,headers=self.header,data=form, timeout=60)
 		vodList = json.loads(self.cleanText(rsp.text))
 		videos = []
 		for vod in vodList:
@@ -106,7 +106,7 @@ class Spider(Spider):
 			"action": "search",
 			"keyword": key
 		}
-		vodList = requests.post(url,headers=self.header,data=form).json()
+		vodList = requests.post(url,headers=self.header,data=form, timeout=60).json()
 		videos = []
 		for vod in vodList:
 			videos.append({

@@ -16,7 +16,7 @@ class haokan:
         return res
 
     def start(self):
-        res = requests.get(self.url, headers=self.headers).text
+        res = requests.get(self.url, headers=self.headers, timeout=60).text
         return self.getJson(res)
 
 

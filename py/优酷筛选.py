@@ -18,7 +18,7 @@ headers1 = {
         # ,'referer':'https://www.youku.com/category/show/type_%E7%94%B5%E8%A7%86%E5%89%A7_mainArea_%E4%B8%AD%E5%9B%BD%E5%86%85%E5%9C%B0_tags_%E9%9D%92%E6%98%A5.html?spm=a2ha1.14919748_WEBTV_JINGXUAN.drawer3.27'
         ,'referer':'https://www.youku.com'
     }
-r = requests.get('https://www.youku.com/category/data?params=%7B%22type%22%3A%22%E7%94%B5%E5%BD%B1%22%7D&optionRefresh=1&pageNo=1',headers=headers1)
+r = requests.get('https://www.youku.com/category/data?params=%7B%22type%22%3A%22%E7%94%B5%E5%BD%B1%22%7D&optionRefresh=1&pageNo=1',headers=headers1, timeout=60)
 html = r.json()
 cates_data = html['data']['filterData']['filter']['filterData'][0]['subFilter']
 cates_data = list(map(lambda x:x['title'],cates_data))
@@ -33,7 +33,7 @@ headers = {'user-agent':'Mozilla/5.0 (Linux; Android 11; M2007J3SC Build/RKQ1.20
 ft_dict = {}
 
 def getHtml(url):
-    r = requests.get(url, headers=headers)
+    r = requests.get(url, headers=headers, timeout=60)
     html = r.text
     html = '{' + re.search('window.__INITIAL_DATA__.*?{(.*?);', html, re.S | re.M).groups()[0]
     undefined = null = None
@@ -45,7 +45,7 @@ def getHtml(url):
 
 
 def getOne(url):
-    r = requests.get(url,headers=headers1)
+    r = requests.get(url,headers=headers1, timeout=60)
     print(r.text)
     html = r.json()
     filters = html['data']['filterData']['filter']['filterData'][1:]

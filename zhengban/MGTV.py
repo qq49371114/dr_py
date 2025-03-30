@@ -28,7 +28,7 @@ class MGTV:
             "src": "",
             "abroad": "",
         }
-        res = requests.get("https://pcweb.api.mgtv.com/player/video", params=params).json()
+        res = requests.get("https://pcweb.api.mgtv.com/player/video", params=params, timeout=60).json()
         return res['data']['atc']['pm2']
 
     def encode_tk2(self, did="e6e13014-393b-43e7-b6be-2323e4960939", pno="1030"):
@@ -49,7 +49,7 @@ class MGTV:
             "src": "",
             "abroad": "",
         }
-        res = requests.get("https://pcweb.api.mgtv.com/player/getSource", params=params).json()
+        res = requests.get("https://pcweb.api.mgtv.com/player/getSource", params=params, timeout=60).json()
         print(res)
         return res
 

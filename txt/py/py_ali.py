@@ -47,7 +47,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		url = self.getDownloadUrl(shareId,shareToken,fileId,category)
 		print(url)
 
-		noRsp = requests.get(url,headers=self.header, allow_redirects=False,verify = False)
+		noRsp = requests.get(url,headers=self.header, allow_redirects=False,verify = False, timeout=60)
 		realUrl = ''
 		if 'Location' in noRsp.headers:
 			realUrl = noRsp.headers['Location']
@@ -105,7 +105,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		infoUrl = 'https://api.aliyundrive.com/adrive/v3/share_link/get_share_by_anonymous'
 
 		infoForm = {'share_id':shareId}
-		infoRsp = requests.post(infoUrl,json = infoForm,headers=self.header)
+		infoRsp = requests.post(infoUrl,json = infoForm,headers=self.header, timeout=60)
 		infoJo = json.loads(infoRsp.text)
 
 		infoJa = []
@@ -168,7 +168,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 	localProxyUrl = 'http://127.0.0.1:UndCover/proxy'
 
 	def redirectResponse(tUrl):
-		rsp = requests.get(tUrl, allow_redirects=False,verify = False)
+		rsp = requests.get(tUrl, allow_redirects=False,verify = False, timeout=60)
 		if 'Location' in rsp.headers:
 			return redirectResponse(rsp.headers['Location'])
 		else:
@@ -188,7 +188,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		customHeader['authorization'] = self.authorization
 		url = 'https://api.aliyundrive.com/v2/file/get_share_link_video_preview_play_info'
 		if category == 'video':
-			rsp = requests.post(url,json = params,headers=customHeader)
+			rsp = requests.post(url,json = params,headers=customHeader, timeout=60)
 			rspJo = json.loads(rsp.text)
 			lShareId = rspJo['share_id']
 			lFileId = rspJo['file_id']
@@ -204,7 +204,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 			jo['file_id'] = lFileId
 			jo['get_audio_play_info'] = True
 		downloadUrl = 'https://api.aliyundrive.com/v2/file/get_share_link_download_url'
-		downloadRsp = requests.post(downloadUrl,json = jo,headers=customHeader)
+		downloadRsp = requests.post(downloadUrl,json = jo,headers=customHeader, timeout=60)
 		resultJo = json.loads(downloadRsp.text)
 		return resultJo['download_url']
 
@@ -220,7 +220,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 		customHeader['authorization'] = self.authorization
 		url = 'https://api.aliyundrive.com/v2/file/get_share_link_video_preview_play_info'
 
-		rsp = requests.post(url,json = params,headers=customHeader)
+		rsp = requests.post(url,json = params,headers=customHeader, timeout=60)
 		rspJo = json.loads(rsp.text)
 
 		quality = ['FHD','HD','SD']
@@ -236,13 +236,13 @@ class Spider(Spider):  # 元类 默认的元类 type
 			if len(highUrl) == 0:
 				highUrl = videoList[0]['url']
 
-		noRsp = requests.get(highUrl,headers=self.header, allow_redirects=False,verify = False)
+		noRsp = requests.get(highUrl,headers=self.header, allow_redirects=False,verify = False, timeout=60)
 		m3u8Url = ''
 		if 'Location' in noRsp.headers:
 			m3u8Url = noRsp.headers['Location']
 		if 'location' in noRsp.headers and len(m3u8Url) == 0 :
 			m3u8Url = noRsp.headers['location']
-		m3u8Rsp = requests.get(m3u8Url,headers=self.header)
+		m3u8Rsp = requests.get(m3u8Url,headers=self.header, timeout=60)
 		m3u8Content = m3u8Rsp.text
 
 		tmpArray = m3u8Url.split('/')[0:-1]
@@ -341,7 +341,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 			'share_pwd':sharePwd
 		}
 		url = 'https://api.aliyundrive.com/v2/share_link/get_share_token'
-		rsp = requests.post(url,json = params,headers=self.header)
+		rsp = requests.post(url,json = params,headers=self.header, timeout=60)
 		jo = json.loads(rsp.text)
 		newShareToken = jo['share_token']
 		self.expiresMap[shareId] = self.localTime + int(jo['expires_in'])
@@ -372,7 +372,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 			if i >= 2 and len(maker) == 0:
 				break
 			params['marker'] = maker			
-			rsp = requests.post(url,json = params,headers=newHeader)
+			rsp = requests.post(url,json = params,headers=newHeader, timeout=60)
 			jo = json.loads(rsp.text)
 			ja = jo['items']
 			for jt in ja:
@@ -399,7 +399,7 @@ class Spider(Spider):  # 元类 默认的元类 type
 			if len(self.extend) > 0:
 				form['refresh_token'] = self.extend
 			print(form)
-			rsp = requests.post(url,json = form,headers=self.header)
+			rsp = requests.post(url,json = form,headers=self.header, timeout=60)
 			jo = json.loads(rsp.text)
 			print(jo)
 			self.authorization = jo['token_type'] + ' ' + jo['access_token']
