@@ -1,6 +1,7 @@
 # coding=utf-8
 # !/usr/bin/python
 import sys
+import defusedxml.ElementTree
 
 sys.path.append('..')
 try:
@@ -13,7 +14,7 @@ import re
 from urllib import request, parse
 import urllib
 import urllib.request
-from xml.etree.ElementTree import fromstring, ElementTree as et
+from xml.etree.ElementTree import ElementTree as et
 
 """
 配置示例:
@@ -99,7 +100,7 @@ class Spider(BaseSpider):  # 元类 默认的元类 type
     def homeVideoContent(self):
         xmlTxt = self.custom_webReadFile(
             urlStr='https://api.xinlangapi.com/xinlangapi.php/provide/vod/from/xlyun/at/xml/?ac=list&h=24')
-        tree = et(fromstring(xmlTxt))
+        tree = et(defusedxml.ElementTree.fromstring(xmlTxt))
         root = tree.getroot()
         listXml = root.iter('list')
         videos = self.custom_list(html=listXml)
@@ -117,7 +118,7 @@ class Spider(BaseSpider):  # 元类 默认的元类 type
         Url = 'https://api.xinlangapi.com/xinlangapi.php/provide/vod/from/xlyun/at/xml/?ac=list&t={0}&pg={1}'.format(
             tid, pg)
         xmlTxt = self.custom_webReadFile(urlStr=Url)
-        tree = et(fromstring(xmlTxt))
+        tree = et(defusedxml.ElementTree.fromstring(xmlTxt))
         root = tree.getroot()
         listXml = root.iter('list')
         for vod in listXml:
@@ -151,7 +152,7 @@ class Spider(BaseSpider):  # 元类 默认的元类 type
         try:
             url = 'https://api.xinlangapi.com/xinlangapi.php/provide/vod/from/xlyun/at/xml/?ac=detail&ids=' + id
             xmlTxt = self.custom_webReadFile(urlStr=url)
-            jRoot = et(fromstring(xmlTxt))
+            jRoot = et(defusedxml.ElementTree.fromstring(xmlTxt))
             xmlList = jRoot.iter('list')
             for vod in xmlList:
                 for x in vod:
@@ -206,7 +207,7 @@ class Spider(BaseSpider):  # 元类 默认的元类 type
         Url = 'https://api.xinlangapi.com/xinlangapi.php/provide/vod/from/xlyun/at/xml/?ac=list&wd={0}&pg={1}'.format(
             urllib.parse.quote(key), '1')
         xmlTxt = self.custom_webReadFile(urlStr=Url)
-        tree = et(fromstring(xmlTxt))
+        tree = et(defusedxml.ElementTree.fromstring(xmlTxt))
         root = tree.getroot()
         listXml = root.iter('list')
         videos = self.custom_list(html=listXml)
@@ -282,7 +283,7 @@ class Spider(BaseSpider):  # 元类 默认的元类 type
                 idTxt = idTxt[0:-1]
                 url = 'https://api.xinlangapi.com/xinlangapi.php/provide/vod/from/xlyun/at/xml/?ac=detail&ids=' + idTxt
                 xmlTxt = self.custom_webReadFile(urlStr=url)
-                jRoot = et(fromstring(xmlTxt))
+                jRoot = et(defusedxml.ElementTree.fromstring(xmlTxt))
                 xmlList = jRoot.iter('list')
                 for vod in xmlList:
                     for x in vod:
@@ -369,7 +370,7 @@ class Spider(BaseSpider):  # 元类 默认的元类 type
     def custom_classification(self):
         xmlTxt = self.custom_webReadFile(
             urlStr='https://api.xinlangapi.com/xinlangapi.php/provide/vod/from/xlyun/at/xml/')
-        tree = et(fromstring(xmlTxt))
+        tree = et(defusedxml.ElementTree.fromstring(xmlTxt))
         root = tree.getroot()
         classXml = root.iter('class')
         temporaryClass = {}
