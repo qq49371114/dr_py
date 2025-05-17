@@ -88,7 +88,7 @@ def getOnlineVer(update_proxy='https://ghproxy.liuzhicong.com/'):
         # r = requests.get('https://code.gitlink.org.cn/api/v1/repos/hjdhnx/dr_py/raw/master/js/version.txt',timeout=(2,2))
         url = f'{update_proxy}https://raw.githubusercontent.com/hjdhnx/dr_py/main/js/version.txt'
         logger.info(f'开始检查线上版本号:{url}')
-        r = requests.get(url, headers=headers, timeout=(2, 2), verify=False)
+        r = requests.get(url, headers=headers, timeout=(2, 2), verify=True)
         ver = r.text
     except Exception as e:
         # print(f'{e}')
@@ -223,7 +223,7 @@ def download_new_version(update_proxy='https://ghproxy.liuzhicong.com/',force_up
         if not download_ok and not force_up:
             return '带进度条的下载升级文件失败,并没有启用强制下载功能。具体参考后台日志'
         elif not download_ok and force_up:
-            r = requests.get(url, headers=headers, timeout=(20, 20), verify=False)
+            r = requests.get(url, headers=headers, timeout=(20, 20), verify=True)
             rb = r.content
             # 保存文件前清空目录
             del_file(tmp_path)
