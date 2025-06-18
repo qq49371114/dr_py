@@ -1,4 +1,4 @@
-import requests
+from security import safe_requests
 
 
 class migu:
@@ -21,7 +21,7 @@ class migu:
 
     def mgdbId_cover_pid(self, mgdbId):
         url = f"https://app-sc.miguvideo.com/vms-worldcup/v3/basic-data/all-view-list/{mgdbId}/2/3000060800"
-        res = requests.get(url, headers=self.headers).json()['body']['replayList']
+        res = safe_requests.get(url, headers=self.headers).json()['body']['replayList']
         if len(res) > 1:
             for k, i in enumerate(res):
                 print(f'{k}->{i["name"]}')
@@ -62,7 +62,7 @@ class migu:
         return f"{url}&ddCalcu={ddCalcu}"
 
     def start(self):
-        res = requests.get("https://webapi.miguvideo.com/gateway/playurl/v3/play/playurl", params=self.get_params(),
+        res = safe_requests.get("https://webapi.miguvideo.com/gateway/playurl/v3/play/playurl", params=self.get_params(),
                            headers=self.headers)
         puData_url = res.json()['body']['urlInfo']['url']
         url = self.calc_url(puData_url)

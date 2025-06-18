@@ -8,10 +8,11 @@ from utils.ua import MOBILE_UA
 from utils.htmlParser import jsoup
 import requests
 from pyquery import PyQuery as pq
+from security import safe_requests
 
 
 def main():
-    r = requests.get('http://m.ysxs8.vip',headers={
+    r = safe_requests.get('http://m.ysxs8.vip',headers={
         'User-Agent':MOBILE_UA
     })
     r.encoding = 'gb18030'
@@ -37,7 +38,7 @@ def main():
 
 def main1():
     url = 'https://www.lanhua.tv/voddetail/7420.html'
-    r = requests.get(url, headers={
+    r = safe_requests.get(url, headers={
         'User-Agent': MOBILE_UA
     })
     # r.encoding = 'gb18030'
@@ -52,7 +53,7 @@ def main1():
 
 def main2():
     url = 'http://www.tvyb03.com/vod/detail/id/117659.html'
-    r = requests.get(url, headers={
+    r = safe_requests.get(url, headers={
         'User-Agent': MOBILE_UA
     })
     html = r.text

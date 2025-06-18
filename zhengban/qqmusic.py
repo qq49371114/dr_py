@@ -1,8 +1,8 @@
-import requests
 import execjs
 from urllib.parse import quote
 import json
 import re
+from security import safe_requests
 
 
 class qqmusic:
@@ -17,7 +17,7 @@ class qqmusic:
         self.get_vid()
 
     def get_vid(self):
-        res = requests.get(self.url).text
+        res = safe_requests.get(self.url).text
         vid = re.findall('"songmid":"(.*?)",', res)[0]
         self.vid = vid
 
@@ -43,7 +43,7 @@ class qqmusic:
         return f'https://u.y.qq.com/cgi-bin/musics.fcg?sign={params["sign"]}&data={params["data"]}'
 
     def start(self):
-        res = requests.get(self.join_url_params())
+        res = safe_requests.get(self.join_url_params())
         print(res.text)
         return res.json()
 

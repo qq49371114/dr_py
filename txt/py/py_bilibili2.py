@@ -1,3 +1,5 @@
+from security import safe_requests
+
 D7='Referer'
 D6='liveapi2'
 D5='playUrl'
@@ -911,7 +913,7 @@ class Spider(Spider):
 		G.detailContent_args={}
 		if L.startswith(Cp):
 			try:
-				A8=CM(url=L,headers=G.header,allow_redirects=False);f=A8.headers['Location'].split('?')[0].split(AA)
+				A8=safe_requests.get(url=L,headers=G.header,allow_redirects=False);f=A8.headers['Location'].split('?')[0].split(AA)
 				while f[-1]==B:f.pop(-1)
 				L=f[-1]
 				if not L.startswith(BX,0,2):return{}

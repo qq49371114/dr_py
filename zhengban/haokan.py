@@ -1,6 +1,6 @@
-import requests
 import re
 import json
+from security import safe_requests
 
 
 class haokan:
@@ -16,7 +16,7 @@ class haokan:
         return res
 
     def start(self):
-        res = requests.get(self.url, headers=self.headers).text
+        res = safe_requests.get(self.url, headers=self.headers).text
         return self.getJson(res)
 
 

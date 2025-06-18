@@ -27,6 +27,7 @@ from concurrent.futures import ThreadPoolExecutor  # 引入线程池
 from flask import url_for, redirect, render_template_string
 from easydict import EasyDict as edict
 from controllers.service import storage_service
+from security import safe_requests
 
 
 def setItem(key, value):
@@ -224,7 +225,7 @@ class CMS:
                 v = headers[k]
                 if v and str(v).startswith('http'):
                     try:
-                        ck = requests.get(v, timeout=timeout, verify=False)
+                        ck = safe_requests.get(v, timeout=timeout, verify=False)
                         headers[k] = ck
                     except Exception as e:
                         logger.info(f'从{v}获取cookie发生错误:{e}')
@@ -460,7 +461,7 @@ class CMS:
             cookies_dict = requests.utils.dict_from_cookiejar(r.cookies)
             cookie_str = ';'.join([f'{k}={cookies_dict[k]}' for k in cookies_dict])
             self.headers['cookie'] = cookie_str
-            r = requests.get(url, headers=self.headers, timeout=self.timeout, verify=False)
+            r = safe_requests.get(url, headers=self.headers, timeout=self.timeout, verify=False)
             r.encoding = self.encoding
             html = r.text
             if html.find('?btwaf=') < 0:
@@ -533,7 +534,7 @@ class CMS:
                     pass
                 else:
                     new_classes = []
-                    r = requests.get(self.homeUrl, headers=self.headers, timeout=self.timeout, verify=False)
+                    r = safe_requests.get(self.homeUrl, headers=self.headers, timeout=self.timeout, verify=False)
                     html = self.checkHtml(r)
                     # print(html)
                     # print(self.headers)
@@ -886,7 +887,7 @@ class CMS:
 
             items = []
             try:
-                r = requests.get(url, headers=self.headers, timeout=self.timeout, verify=False)
+                r = safe_requests.get(url, headers=self.headers, timeout=self.timeout, verify=False)
                 html = self.checkHtml(r)
                 print(self.headers)
                 # print(html)
@@ -1000,7 +1001,7 @@ class CMS:
             pq = jsp.pq
             vod['vod_id'] = orId
             if not html:  # 没传递html参数接detailUrl下来智能获取
-                r = requests.get(url, headers=self.headers, timeout=self.timeout, verify=False)
+                r = safe_requests.get(url, headers=self.headers, timeout=self.timeout, verify=False)
                 html = self.checkHtml(r)
                 if is_json:
                     html = self.dealJson(html)
@@ -1446,7 +1447,7 @@ class CMS:
                     logger.info(params)
                     r = requests.post(rurl, headers=headers_cp, data=params, timeout=self.timeout, verify=False)
                 else:
-                    r = requests.get(url, headers=self.headers, timeout=self.timeout, verify=False)
+                    r = safe_requests.get(url, headers=self.headers, timeout=self.timeout, verify=False)
                 html = self.checkHtml(r)
                 if is_json:
                     html = self.dealJson(html)
@@ -1462,7 +1463,7 @@ class CMS:
                         }
                     self.saveCookie(cookie)
                     self.headers['cookie'] = cookie
-                    r = requests.get(url, headers=self.headers, timeout=self.timeout, verify=False)
+                    r = safe_requests.get(url, headers=self.headers, timeout=self.timeout, verify=False)
                     r.encoding = self.encoding
                     html = r.text
                 if not show_name and not str(html).find(key) > -1:

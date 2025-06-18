@@ -20,3 +20,4 @@ jsonpath
 quickjs
 ujson
 Werkzeug==2.2.2
+security==1.3.1

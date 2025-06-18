@@ -4,17 +4,16 @@
 # Author: DaShenHan&道长-----先苦后甜，任凭晚风拂柳颜------
 # Date  : 2022/12/9
 import base64
-
-import requests
 from io import BytesIO
 from PIL import Image
+from security import safe_requests
 
 def main():
     headers = {
         'referer':'https://files.yuchenglw.com',
         # 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36 Edg/108.0.1462.42'
     }
-    r = requests.get('https://oa.qianyibangong.com/p/221121/33cb60d609',headers=headers,verify=False)
+    r = safe_requests.get('https://oa.qianyibangong.com/p/221121/33cb60d609',headers=headers,verify=False)
     image_base64 = r.text
     # print(r.text)
     # print(type(image_base64))

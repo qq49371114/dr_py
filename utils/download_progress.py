@@ -7,11 +7,10 @@
 
 import os
 import time
-# import logging
-import requests
 from urllib.parse import unquote
 from contextlib import closing
 from utils.log import logger
+from security import safe_requests
 
 chunkSize = 1024 * 1024
 loop = 5
@@ -52,7 +51,7 @@ def file_download(fileUrl, filePath):
     if os.path.exists(filePath):
         os.remove(filePath)
     # response = requests.get(fileUrl, headers=headers, stream=True, verify=False)
-    response = requests.get(fileUrl, headers=headers, stream=True)
+    response = safe_requests.get(fileUrl, headers=headers, stream=True)
     is_chunked = response.headers.get('Transfer-Encoding') or ''
     if is_chunked == 'chunked':
         logger.info('chunked文件不支持获取总文件大小，tqdm模块才能分段下载')
@@ -83,7 +82,7 @@ def file_download(fileUrl, filePath):
 
         if remainSize > 0:
 
-            with closing(requests.get(fileUrl, headers=_headers, stream=True)) as _response, open(
+            with closing(safe_requests.get(fileUrl, headers=_headers, stream=True)) as _response, open(
                     filePath,
                     "ab") as file:
                 for content in _response.iter_content(chunk_size=chunkSize):
@@ -181,7 +180,7 @@ if __name__ == '__main__':
     # urlTxt = 'download/urls.txt'
     # with open(urlTxt, "r") as f:
     #     fileUrls = [line.strip() for line in f.readlines()]
-    response = requests.get('https://ghproxy.liuzhicong.com/https://github.com/hjdhnx/dr_py/archive/refs/heads/main.zip', headers=headers, stream=True)
+    response = safe_requests.get('https://ghproxy.liuzhicong.com/https://github.com/hjdhnx/dr_py/archive/refs/heads/main.zip', headers=headers, stream=True)
     print(response.headers)
     fileSize = int(response.headers.get('content-length'))  # 文件大小
     logger.info(f'fileSize:{fileSize}')

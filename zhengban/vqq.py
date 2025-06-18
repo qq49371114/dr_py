@@ -4,8 +4,8 @@
 # Author: DaShenHan&道长-----先苦后甜，任凭晚风拂柳颜------
 # Date  : 2022/10/24
 
-import requests
 import re
+from security import safe_requests
 
 time_out = 2
 cookie = """
@@ -36,7 +36,7 @@ def get_vid(vipUrl):
         if _type.find('/') > -1:
             vid = _type.split("/")[1]
         else:
-            r = requests.get(vipUrl, headers=headers)
+            r = safe_requests.get(vipUrl, headers=headers)
             html = r.text
             vid = html.split('<link rel="canonical" href="https://v.qq.com/x/cover/')[1].split('/')[1].split('.')[0]
     else:
@@ -54,7 +54,7 @@ def vqq_jx_rx(url):
     vid = get_vid(url)
     api = f"https://vv.video.qq.com/getinfo?defn=fhd&platform=10801&otype=ojson&sdtfrom=v4138&appVer=7&vid={vid}&newnettype=1&fhdswitch=1&show1080p=1&dtype=3&sphls=2"
     print(api)
-    r = requests.get(api, headers=headers, timeout=time_out)
+    r = safe_requests.get(api, headers=headers, timeout=time_out)
     ret = r.json()
     try:
         urls = ret["vl"]["vi"][0]['ul']['ui']
@@ -70,7 +70,7 @@ def vqq_jx(url):
     vid = get_vid(url)
     api = f'https://vv.video.qq.com/getinfo?encver=2&defn=shd&platform=10801&otype=ojson&sdtfrom=v4138&appVer=7&dtype=3&vid={vid}&newnettype=1'
     print(api)
-    r = requests.get(api,headers=headers,timeout=time_out)
+    r = safe_requests.get(api,headers=headers,timeout=time_out)
     ret = r.json()
     try:
         urls = ret["vl"]["vi"][0]['ul']['ui']

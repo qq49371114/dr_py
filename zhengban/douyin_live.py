@@ -1,5 +1,5 @@
-import requests
 import re
+from security import safe_requests
 
 
 class douYinLive:
@@ -13,7 +13,7 @@ class douYinLive:
         return re.findall('flv_pull_url":(.*?})', html)[0]
 
     def start(self):
-        res = requests.get(self.url, headers=self.headers)
+        res = safe_requests.get(self.url, headers=self.headers)
         print(self.parse(res.text))
 
 

@@ -15,6 +15,7 @@ from utils.download_progress import file_downloads
 from utils.web import get_interval
 from utils.htmlParser import jsoup
 import ujson
+from security import safe_requests
 
 headers = {
     'Referer': 'https://gitcode.net/',
@@ -28,7 +29,7 @@ def getHotSuggest1(url='http://4g.v.sogou.com/hotsugg', size=0):
     pdfa = jsp.pdfa
     pd = jsp.pd
     try:
-        r = requests.get(url, headers=headers, timeout=2)
+        r = safe_requests.get(url, headers=headers, timeout=2)
         html = r.text
         data = pdfa(html, 'ul.hot-list&&li')
         suggs = [{'title': pdfh(dt, 'a&&Text'), 'url': pd(dt, 'a&&href')} for dt in data]
@@ -88,7 +89,7 @@ def getOnlineVer(update_proxy='https://ghproxy.liuzhicong.com/'):
         # r = requests.get('https://code.gitlink.org.cn/api/v1/repos/hjdhnx/dr_py/raw/master/js/version.txt',timeout=(2,2))
         url = f'{update_proxy}https://raw.githubusercontent.com/hjdhnx/dr_py/main/js/version.txt'
         logger.info(f'开始检查线上版本号:{url}')
-        r = requests.get(url, headers=headers, timeout=(2, 2), verify=False)
+        r = safe_requests.get(url, headers=headers, timeout=(2, 2), verify=False)
         ver = r.text
     except Exception as e:
         # print(f'{e}')
@@ -223,7 +224,7 @@ def download_new_version(update_proxy='https://ghproxy.liuzhicong.com/',force_up
         if not download_ok and not force_up:
             return '带进度条的下载升级文件失败,并没有启用强制下载功能。具体参考后台日志'
         elif not download_ok and force_up:
-            r = requests.get(url, headers=headers, timeout=(20, 20), verify=False)
+            r = safe_requests.get(url, headers=headers, timeout=(20, 20), verify=False)
             rb = r.content
             # 保存文件前清空目录
             del_file(tmp_path)
@@ -254,7 +255,7 @@ def download_lives(live_url: str):
     live_path = os.path.join(base_path, f'base/直播.txt')
     logger.info(f'尝试同步{live_url}远程内容到{live_path}')
     try:
-        r = requests.get(live_url, headers=headers, timeout=3)
+        r = safe_requests.get(live_url, headers=headers, timeout=3)
         auto_encoding = r.apparent_encoding
         if auto_encoding.lower() in ['utf-8', 'gbk', 'bg2312', 'gb18030']:
             r.encoding = auto_encoding

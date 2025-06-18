@@ -1,9 +1,10 @@
 #coding=utf-8
 #!/usr/bin/python
 import sys
+from security import safe_requests
+
 sys.path.append('..') 
 from base.spider import Spider
-import requests
 
 class Spider(Spider):
 	def getDependence(self):
@@ -36,7 +37,7 @@ class Spider(Spider):
 
 	def searchContent(self,key,quick):
 		url = "https://yiso.fun/api/search?name={0}&from=ali".format(key)
-		vodList = requests.get(url=url, headers=self.header, verify=False).json()["data"]["list"]
+		vodList = safe_requests.get(url=url, headers=self.header, verify=False).json()["data"]["list"]
 		videos = []
 		for vod in vodList:
 			videos.append({

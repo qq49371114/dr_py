@@ -1,5 +1,5 @@
-import requests
 import re
+from security import safe_requests
 
 
 class kuaishou:
@@ -11,7 +11,7 @@ class kuaishou:
         }
 
     def start(self):
-        json_data = requests.get(self.url, headers=self.headers, allow_redirects=True).text
+        json_data = safe_requests.get(self.url, headers=self.headers, allow_redirects=True).text
         res = re.findall('type="video/mp4" src="(.*?)"', json_data)[0]
         print(res)
         return res

@@ -6,13 +6,13 @@
 import re
 from time import time as getTime
 import sys
-import requests
 import os
 import zipfile
 import shutil # https://blog.csdn.net/weixin_33130113/article/details/112336581
 from utils.log import logger
 from utils.web import get_interval
 from utils.htmlParser import jsoup
+from security import safe_requests
 
 headers = {
         'Referer': 'https://gitcode.net/',
@@ -27,7 +27,7 @@ def getHotSuggest(url='http://4g.v.sogou.com/hotsugg'):
     pdfa = jsp.pdfa
     pd = jsp.pd
     try:
-        r = requests.get(url,headers=headers,timeout=2)
+        r = safe_requests.get(url,headers=headers,timeout=2)
         html = r.text
         data = pdfa(html,'ul.hot-list&&li')
         suggs = [{'title':pdfh(dt,'a&&Text'),'url':pd(dt,'a&&href')} for dt in data]
@@ -54,7 +54,7 @@ def getOnlineVer():
     msg = ''
     try:
         # r = requests.get('https://gitcode.net/qq_32394351/dr_py/-/raw/master/js/version.txt',timeout=(2,2),proxies=proxies)
-        r = requests.get('https://code.gitlink.org.cn/api/v1/repos/hjdhnx/dr_py/raw/master/js/version.txt',
+        r = safe_requests.get('https://code.gitlink.org.cn/api/v1/repos/hjdhnx/dr_py/raw/master/js/version.txt',
                          timeout=(2, 2),proxies=proxies)
         ver = r.text
     except Exception as e:
@@ -160,7 +160,7 @@ def download_new_version():
     try:
         # print(f'开始下载:{url}')
         logger.info(f'开始下载:{url}')
-        r = requests.get(url,headers=headers,timeout=(20,20),proxies=proxies)
+        r = safe_requests.get(url,headers=headers,timeout=(20,20),proxies=proxies)
         rb = r.content
         download_path = os.path.join(tmp_path, 'dr_py.zip')
         with open(download_path,mode='wb+') as f:
@@ -188,7 +188,7 @@ def download_lives(live_url:str):
     live_path = os.path.join(base_path, f'base/直播.txt')
     logger.info(f'尝试同步{live_url}远程内容到{live_path}')
     try:
-        r = requests.get(live_url,headers=headers,timeout=3)
+        r = safe_requests.get(live_url,headers=headers,timeout=3)
         auto_encoding = r.apparent_encoding
         if auto_encoding.lower() in ['utf-8','gbk','bg2312','gb18030']:
             r.encoding = auto_encoding

@@ -3,7 +3,7 @@
 # File  : 酷云筛选.py
 # Author: DaShenHan&道长-----先苦后甜，任凭晚风拂柳颜------
 # Date  : 2022/9/24
-import requests
+from security import safe_requests
 
 headers = {
 "User-Agent": "Dalvik/2.1.0"
@@ -12,7 +12,7 @@ headers = {
 
 def getClass():
     url = 'http://api.kunyu77.com/api.php/provide/filter'
-    r = requests.get(url, headers=headers)
+    r = safe_requests.get(url, headers=headers)
     html = r.json()
     class_names = []
     class_urls = []
@@ -28,7 +28,7 @@ ft_dict = {}
 def getCate():
     # url = 'http://api.kunyu77.com/api.php/provide/searchFilter?devid=EA83E58357FC020ABA526E9620AD7E89&package=com.sevenVideo.app.android&pcode=010110004&year=&category=&area=&pagenum=1&type_id=0&pagesize=24'
     url = 'http://api.kunyu77.com/api.php/provide/searchFilter?year=&category=&area=&pagenum=1&type_id=1&pagesize=24'
-    r = requests.get(url,headers=headers)
+    r = safe_requests.get(url,headers=headers)
     html = r.json()
     print(html)
     filters = html['data']['conditions']

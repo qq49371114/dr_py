@@ -3,15 +3,15 @@
 # File  : 通用免嗅.py
 # Author: DaShenHan&道长-----先苦后甜，任凭晚风拂柳颜------
 # Date  : 2022/8/28
-import requests
 import re
 import json
 from urllib.parse import urljoin,quote,unquote
 import base64
+from security import safe_requests
 
 def lazyParse(input,d):
     print('通用免嗅:',input)
-    r = requests.get(input, headers=d.headers,timeout=d.timeout)
+    r = safe_requests.get(input, headers=d.headers,timeout=d.timeout)
     r.encoding = d.encoding
     html = r.text
     # print(html)
