@@ -11,7 +11,7 @@ class sohu:
         }
 
     def get_vid(self):
-        res = requests.get(self.url, headers=self.headers)
+        res = requests.get(self.url, headers=self.headers, timeout=60)
         vid = re.findall('var vid="(\d+)";', res.text)
         if len(vid) > 0:
             return vid[0]
@@ -24,7 +24,7 @@ class sohu:
             "ssl": "1",
             "pflag": "pch5",
         }
-        res = requests.get("https://hot.vrs.sohu.com/vrs_flash.action", params=params, headers=self.headers)
+        res = requests.get("https://hot.vrs.sohu.com/vrs_flash.action", params=params, headers=self.headers, timeout=60)
         return res.json()
 
 

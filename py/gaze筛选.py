@@ -18,7 +18,7 @@ def getFilters(url):
     pdfh = jsp.pdfh
     pdfa = jsp.pdfa
     print(jsp)
-    r = requests.get(url,headers=headers)
+    r = requests.get(url,headers=headers, timeout=60)
     r.encoding = r.apparent_encoding
     html = r.text
     cls_list = pdfa(html,'.mform&&div')

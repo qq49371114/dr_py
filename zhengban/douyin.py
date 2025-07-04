@@ -11,12 +11,12 @@ class DouYin:
         }
 
     def get_mid(self):
-        res = requests.get(self.url, headers=self.headers)
+        res = requests.get(self.url, headers=self.headers, timeout=60)
         return res.url.split("/", 6)[-2]
 
     def start(self):
         url = f"https://www.iesdouyin.com/web/api/v2/aweme/iteminfo/?item_ids={self.get_mid()}"
-        res = requests.get(url, headers=self.headers)
+        res = requests.get(url, headers=self.headers, timeout=60)
         print(res.json())
         return res.json()
 

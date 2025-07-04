@@ -13,7 +13,7 @@ from pyquery import PyQuery as pq
 def main():
     r = requests.get('http://m.ysxs8.vip',headers={
         'User-Agent':MOBILE_UA
-    })
+    }, timeout=60)
     r.encoding = 'gb18030'
     html = r.text
     # print(html)
@@ -39,7 +39,7 @@ def main1():
     url = 'https://www.lanhua.tv/voddetail/7420.html'
     r = requests.get(url, headers={
         'User-Agent': MOBILE_UA
-    })
+    }, timeout=60)
     # r.encoding = 'gb18030'
     html = r.text
     # print(html)
@@ -54,7 +54,7 @@ def main2():
     url = 'http://www.tvyb03.com/vod/detail/id/117659.html'
     r = requests.get(url, headers={
         'User-Agent': MOBILE_UA
-    })
+    }, timeout=60)
     html = r.text
     jsp = jsoup(r.url)
     a = jsp.pdfa(html, '.myui-panel__head h3')
@@ -91,7 +91,7 @@ def main3():
     a = jsp.pdfh(html, 'div p:first--#exd1')
     print(a)
 
-    html = requests.get('https://www.leyupro.com/lyd/139451.html').text
+    html = requests.get('https://www.leyupro.com/lyd/139451.html', timeout=60).text
     a = jsp.pdfa(html,'.yunplay&&.downtitle&&ul li')
     print(a)
 

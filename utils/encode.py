@@ -127,7 +127,7 @@ class OcrApi:
     def classification(self,img):
         try:
             # code = requests.post(self.api,data=img,headers={'user-agent':PC_UA},verify=False).text
-            code = requests.post(self.api,data=base64.b64encode(img).decode(),headers={'user-agent':PC_UA},verify=False).text
+            code = requests.post(self.api,data=base64.b64encode(img).decode(),headers={'user-agent':PC_UA},verify=False, timeout=60).text
         except Exception as e:
             print(f'ocr识别发生错误:{e}')
             code = ''

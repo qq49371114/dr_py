@@ -21,7 +21,7 @@ class iqiyi:
         return execjs.compile(open("./js/cmd5x.js").read())
 
     def get_tvid(self):
-        res = requests.get(self.url, headers=self.headers)
+        res = requests.get(self.url, headers=self.headers, timeout=60)
         # print(res.text)
         tvid = re.findall("tvid=(.*?)&aid", res.text)[0]
         vid = re.findall('"vid":"(.*?)",', res.text)[0]
@@ -81,7 +81,7 @@ class iqiyi:
 
     def start(self):
         params = self.join_params()
-        res = requests.get("https://cache.video.iqiyi.com/dash", params=params, headers=self.headers)
+        res = requests.get("https://cache.video.iqiyi.com/dash", params=params, headers=self.headers, timeout=60)
         print(res.text)
 
 

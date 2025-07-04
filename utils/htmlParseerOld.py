@@ -202,7 +202,7 @@ if __name__ == '__main__':
         print(parse)
         items = selector.css(parse)
         return [str(item) for item in items]
-    r = requests.get(url)
+    r = requests.get(url, timeout=60)
     html = r.text
     # parsel 不好用啊,很难实现封装pdfa之类的函数
     items = pdfa2(html,'.fed-pops-navbar&&ul.fed-part-rows&&a')
